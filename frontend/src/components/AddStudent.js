@@ -20,7 +20,7 @@ const AddStudent = ({ setStudents }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('https://student-management-system-backend-p2gk.onrender.com', {
+      const res = await fetch('https://student-management-system-backend-5234.onrender.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(student)
