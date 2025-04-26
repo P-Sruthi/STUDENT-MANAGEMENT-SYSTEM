@@ -19,7 +19,7 @@ const EditStudent = ({ setStudents }) => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/students/${id}`);
+        const res = await fetch(`https://student-management-system-backend-et8x.onrender.com/students/${id}`);
         const data = await res.json();
         setStudent(data);
       } catch (err) {
