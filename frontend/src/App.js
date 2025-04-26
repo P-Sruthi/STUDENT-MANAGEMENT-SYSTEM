@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await fetch("/Students");
+        const response = await fetch("/students");
         const data = await response.json();
         setStudents(data);
       } catch (err) {
