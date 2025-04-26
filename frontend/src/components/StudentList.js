@@ -8,7 +8,7 @@ const StudentList = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await fetch(' https://student-management-system-backend-5234.onrender.com/students');
+        const res = await fetch(' https://student-management-system-backend-ew7c.onrender.com/students');
         if (res.ok) {
           const data = await res.json();
           setStudents(data);
@@ -25,7 +25,7 @@ const StudentList = () => {
 
   const deleteStudent = async (id) => {
     try {
-      await fetch(` https://student-management-system-backend-5234.onrender.com/students/${id}`, {
+      await fetch(` https://student-management-system-backend-ew7c.onrender.com/students/${id}`, {
         method: "DELETE",
       });
       // Remove the student from the list after successful deletion
