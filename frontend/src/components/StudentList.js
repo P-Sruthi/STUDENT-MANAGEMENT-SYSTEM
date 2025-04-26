@@ -8,7 +8,7 @@ const StudentList = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await fetch('http://localhost:5000/students');
+        const res = await fetch('https://student-management-system-6rl8.onrender.com/students');
         if (res.ok) {
           const data = await res.json();
           setStudents(data);
@@ -25,7 +25,7 @@ const StudentList = () => {
 
   const deleteStudent = async (id) => {
     try {
-      await fetch(`http://localhost:5000/students/${id}`, {
+      await fetch(`https://student-management-system-6rl8.onrender.com/students/${id}`, {
         method: "DELETE",
       });
       // Remove the student from the list after successful deletion
@@ -38,7 +38,7 @@ const StudentList = () => {
   return (
     <div className="bg-gradient-to-r from-blue-500 to-green-400 min-h-screen p-6">
       <div className="text-center bg-white shadow-xl rounded-lg max-w-7xl mx-auto p-8">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6">Student List</h2>
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6" >Student List</h2>
         <Link to="/students/add">
           <button className="bg-blue-600 text-white px-6 py-3 rounded-lg mb-6 hover:bg-blue-700 transition">
             Add Student
