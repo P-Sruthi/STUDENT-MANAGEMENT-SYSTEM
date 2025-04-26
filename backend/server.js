@@ -3,7 +3,7 @@ require('dotenv').config();  // Import dotenv to use .env variables
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Student = require('./models/Student');
+const Student = require('./models/student');
 
 const app = express();
 const PORT = process.env.PORT || 5000;  // Use the port from .env or fallback to 5000
