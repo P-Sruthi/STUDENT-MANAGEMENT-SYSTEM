@@ -57,24 +57,6 @@ const EditStudent = ({ setStudents }) => {
     }
   };
 
-  // Handle delete student
-  const handleDelete = async () => {
-    try {
-      const res = await fetch(`https://student-management-system-backend-et8x.onrender.com/${id}`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
-        // Remove student from list after successful delete
-        setStudents(prevStudents => prevStudents.filter(s => s._id !== id));
-        navigate('/students');
-      } else {
-        console.error('Failed to delete student');
-      }
-    } catch (err) {
-      console.error('Error deleting student:', err);
-    }
-  };
-
   return (
     <div className="bg-gradient-to-r from-blue-500 to-green-400 min-h-screen p-6">
       <div className="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-md">
@@ -147,13 +129,6 @@ const EditStudent = ({ setStudents }) => {
             Update Student
           </button>
         </form>
-        <button
-          type="button"
-          onClick={handleDelete}
-          className="col-span-2 mt-4 bg-red-600 text-white p-2 rounded-lg hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-red-500"
-        >
-          Delete Student
-        </button>
       </div>
     </div>
   );

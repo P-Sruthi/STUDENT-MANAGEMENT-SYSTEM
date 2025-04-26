@@ -25,11 +25,17 @@ const StudentList = () => {
 
   const deleteStudent = async (id) => {
     try {
-      await fetch(` https://student-management-system-backend-et8x.onrender.com/${id}`, {
+      // Perform DELETE request to the backend API
+      const res = await fetch(`https://student-management-system-backend-et8x.onrender.com/${id}`, {
         method: "DELETE",
       });
-      // Remove the student from the list after successful deletion
-      setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
+
+      // If the request was successful, update the student list
+      if (res.ok) {
+        setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
+      } else {
+        console.error("Failed to delete student");
+      }
     } catch (err) {
       console.error("Error deleting student:", err);
     }
