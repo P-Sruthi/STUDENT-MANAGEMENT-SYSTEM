@@ -3,7 +3,7 @@ require('dotenv').config();  // Import dotenv to use .env variables
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const student = require('./models/student');
+const Student = require('./models/student');
 
 const app = express();
 const PORT = process.env.PORT || 5000;  // Use the port from .env or fallback to 5000
@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Get all students
 app.get('/students', async (req, res) => {
   try {
-    const students = await student.find();
+    const students = await Student.find();
     res.json(students);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -34,7 +34,7 @@ app.get('/students', async (req, res) => {
 // Get a student by ID
 app.get('/students/:id', async (req, res) => {
   try {
-    const student = await student.findById(req.params.id);
+    const student = await Student.findById(req.params.id);
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
@@ -47,7 +47,7 @@ app.get('/students/:id', async (req, res) => {
 // Add student
 app.post('/students', async (req, res) => {
   try {
-    const student = new student(req.body);
+    const student = new Student(req.body);
     await student.save();
     res.status(201).json(student);
   } catch (err) {
@@ -58,7 +58,7 @@ app.post('/students', async (req, res) => {
 // Delete student
 app.delete('/students/:id', async (req, res) => {
   try {
-    await student.findByIdAndDelete(req.params.id);
+    await Student.findByIdAndDelete(req.params.id);
     res.json({ message: 'Student deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -68,7 +68,7 @@ app.delete('/students/:id', async (req, res) => {
 // Update student
 app.put('/students/:id', async (req, res) => {
   try {
-    const updatedStudent = await student.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedStudent = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedStudent);
   } catch (err) {
     res.status(400).json({ message: err.message });
