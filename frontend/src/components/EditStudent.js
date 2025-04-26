@@ -19,7 +19,7 @@ const EditStudent = ({ setStudents }) => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const res = await fetch(` https://student-management-system-backend-et8x.onrender.com/${id}`);
+        const res = await fetch(`https://student-management-system-backend-et8x.onrender.com/${id}`);
         const data = await res.json();
         setStudent(data);
       } catch (err) {
@@ -36,23 +36,42 @@ const EditStudent = ({ setStudents }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(` https://student-management-system-backend-et8x.onrender.com/${id}`, {
+      const res = await fetch(`https://student-management-system-backend-et8x.onrender.com/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(student)
       });
       if (res.ok) {
         const updatedStudent = await res.json();
+        console.log('Updated student:', updatedStudent);
         // Update the student list after edit
         setStudents(prevStudents =>
           prevStudents.map(s => (s._id === updatedStudent._id ? updatedStudent : s))
         );
         navigate('/students');
       } else {
-        console.error('Failed to update student');
+        console.error('Failed to update student:', await res.text());
       }
     } catch (err) {
       console.error('Error updating student:', err);
+    }
+  };
+
+  // Handle delete student
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`https://student-management-system-backend-et8x.onrender.com/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        // Remove student from list after successful delete
+        setStudents(prevStudents => prevStudents.filter(s => s._id !== id));
+        navigate('/students');
+      } else {
+        console.error('Failed to delete student');
+      }
+    } catch (err) {
+      console.error('Error deleting student:', err);
     }
   };
 
@@ -128,6 +147,13 @@ const EditStudent = ({ setStudents }) => {
             Update Student
           </button>
         </form>
+        <button
+          type="button"
+          onClick={handleDelete}
+          className="col-span-2 mt-4 bg-red-600 text-white p-2 rounded-lg hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-red-500"
+        >
+          Delete Student
+        </button>
       </div>
     </div>
   );
