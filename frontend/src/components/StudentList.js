@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { API_URL } from "../config"; // ✅ Import
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ Loading state
 
+  // Fetch students data on page load
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await fetch(`${API_URL}/students`); // ✅ Correct URL
+        const res = await fetch('http://localhost:5000/students');
         if (res.ok) {
           const data = await res.json();
           setStudents(data);
@@ -18,8 +17,6 @@ const StudentList = () => {
         }
       } catch (err) {
         console.error('Error fetching students:', err);
-      } finally {
-        setLoading(false); // ✅ Stop loading
       }
     };
 
@@ -28,22 +25,15 @@ const StudentList = () => {
 
   const deleteStudent = async (id) => {
     try {
-      await fetch(`${API_URL}/students/${id}`, { // ✅ Correct URL
+      await fetch(`http://localhost:5000/students/${id}`, {
         method: "DELETE",
       });
-      setStudents(prev => prev.filter(student => student._id !== id));
+      // Remove the student from the list after successful deletion
+      setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
     } catch (err) {
       console.error("Error deleting student:", err);
     }
   };
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-green-400">
-        <div className="text-white text-2xl">Loading students...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-green-400 min-h-screen p-6">
@@ -95,9 +85,6 @@ const StudentList = () => {
               ))}
             </tbody>
           </table>
-          {students.length === 0 && (
-            <div className="text-gray-500 mt-6">No students found.</div>
-          )}
         </div>
       </div>
     </div>

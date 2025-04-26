@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API_URL } from '../config'; // <-- added
 
 const AddStudent = ({ setStudents }) => {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const AddStudent = ({ setStudents }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API_URL}/students`, { // <-- fixed
+      const res = await fetch('http://localhost:5000/students', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(student)
