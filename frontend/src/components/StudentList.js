@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { API_URL } from "../config"; // ✅ Import
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ Loading state
 
-  // Fetch students data on page load
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await fetch('https://student-management-system-backend-5234.onrender.com');
+        const res = await fetch(`${API_URL}/students`); // ✅ Correct URL
         if (res.ok) {
           const data = await res.json();
           setStudents(data);
@@ -17,6 +18,8 @@ const StudentList = () => {
         }
       } catch (err) {
         console.error('Error fetching students:', err);
+      } finally {
+        setLoading(false); // ✅ Stop loading
       }
     };
 
@@ -25,20 +28,27 @@ const StudentList = () => {
 
   const deleteStudent = async (id) => {
     try {
-      await fetch(`https://student-management-system-backend-5234.onrender.com/${id}`, {
+      await fetch(`${API_URL}/students/${id}`, { // ✅ Correct URL
         method: "DELETE",
       });
-      // Remove the student from the list after successful deletion
-      setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
+      setStudents(prev => prev.filter(student => student._id !== id));
     } catch (err) {
       console.error("Error deleting student:", err);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-green-400">
+        <div className="text-white text-2xl">Loading students...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-gradient-to-r from-blue-500 to-green-400 min-h-screen p-6">
       <div className="text-center bg-white shadow-xl rounded-lg max-w-7xl mx-auto p-8">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6" >Student List</h2>
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6">Student List</h2>
         <Link to="/students/add">
           <button className="bg-blue-600 text-white px-6 py-3 rounded-lg mb-6 hover:bg-blue-700 transition">
             Add Student
@@ -85,6 +95,9 @@ const StudentList = () => {
               ))}
             </tbody>
           </table>
+          {students.length === 0 && (
+            <div className="text-gray-500 mt-6">No students found.</div>
+          )}
         </div>
       </div>
     </div>

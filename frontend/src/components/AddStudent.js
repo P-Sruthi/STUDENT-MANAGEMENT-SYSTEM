@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config'; // <-- added
 
 const AddStudent = ({ setStudents }) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const AddStudent = ({ setStudents }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('https://student-management-system-backend-5234.onrender.com', {
+      const res = await fetch(`${API_URL}/students`, { // <-- fixed
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(student)
