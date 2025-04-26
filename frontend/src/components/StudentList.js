@@ -8,7 +8,7 @@ const StudentList = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await fetch(' https://student-management-system-backend-m8ay.onrender.com');
+        const res = await fetch(' https://student-management-system-backend-m8ay.onrender.com/students');
         if (res.ok) {
           const data = await res.json();
           setStudents(data);
