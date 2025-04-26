@@ -25,22 +25,15 @@ const StudentList = () => {
 
   const deleteStudent = async (id) => {
     try {
-      // Perform DELETE request to the backend API
-      const res = await fetch(`https://student-management-system-backend-et8x.onrender.com/${id}`, {
+      await fetch(`http://localhost:5000/students/${id}`, {
         method: "DELETE",
       });
-
-      // If the request was successful, update the student list
-      if (res.ok) {
-        setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
-      } else {
-        console.error("Failed to delete student");
-      }
+      // Remove the student from the list after successful deletion
+      setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
     } catch (err) {
       console.error("Error deleting student:", err);
     }
   };
-
   return (
     <div className="bg-gradient-to-r from-blue-500 to-green-400 min-h-screen p-6">
       <div className="text-center bg-white shadow-xl rounded-lg max-w-7xl mx-auto p-8">
