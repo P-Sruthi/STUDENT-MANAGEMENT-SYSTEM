@@ -36,7 +36,7 @@ const EditStudent = ({ setStudents }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:5000/students/${id}`, {
+      const res = await fetch(`https://student-management-system-backend-et8x.onrender.com/students/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(student)

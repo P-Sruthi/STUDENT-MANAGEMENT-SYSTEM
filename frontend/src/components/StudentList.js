@@ -25,7 +25,7 @@ const StudentList = () => {
 
   const deleteStudent = async (id) => {
     try {
-      await fetch(`http://localhost:5000/students/${id}`, {
+      await fetch(`https://student-management-system-backend-et8x.onrender.com/students/${id}`, {
         method: "DELETE",
       });
       // Remove the student from the list after successful deletion
